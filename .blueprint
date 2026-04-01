@@ -1,0 +1,43 @@
+created:
+    - database/factories/SceneFactory.php
+    - database/factories/InteractionFactory.php
+    - database/factories/ConstructionFactory.php
+    - database/factories/MeaningFactory.php
+    - database/factories/CapacitacionFactory.php
+    - database/factories/EstadoFactory.php
+    - database/factories/MunicipioFactory.php
+    - database/factories/ParroquiaFactory.php
+    - database/factories/AsistenciaFactory.php
+    - database/factories/UserFactory.php
+    - database/migrations/2026_04_01_164254_create_scenes_table.php
+    - database/migrations/2026_04_01_164255_create_interactions_table.php
+    - database/migrations/2026_04_01_164256_create_constructions_table.php
+    - database/migrations/2026_04_01_164257_create_meanings_table.php
+    - database/migrations/2026_04_01_164258_create_capacitacions_table.php
+    - database/migrations/2026_04_01_164259_create_estados_table.php
+    - database/migrations/2026_04_01_164300_create_municipios_table.php
+    - database/migrations/2026_04_01_164301_create_parroquias_table.php
+    - database/migrations/2026_04_01_164302_create_asistencias_table.php
+    - database/migrations/2026_04_01_164303_create_users_table.php
+    - database/migrations/2026_04_01_164304_create_capacitacion_user_table.php
+    - app/Models/Scene.php
+    - app/Models/Interaction.php
+    - app/Models/Construction.php
+    - app/Models/Meaning.php
+    - app/Models/Capacitacion.php
+    - app/Models/Estado.php
+    - app/Models/Municipio.php
+    - app/Models/Parroquia.php
+    - app/Models/Asistencia.php
+    - app/Models/User.php
+models:
+    User: { relationships: { belongsToMany: Capacitacion } }
+    Scene: { name: string, meaning: string, description: string, usage: string, nanobanana: string, grok: string, construction_id: unsignedInteger, interaction_id: unsignedInteger, relationships: { belongsTo: 'Construction, Interaction' } }
+    Interaction: { title: string, type: string, relationships: { hasMany: Scene } }
+    Construction: { title: string, type: string, relationships: { hasMany: 'Meaning, Scene' } }
+    Meaning: { title: string, description: longtext, construction_id: unsignedInteger, relationships: { belongsTo: Construction } }
+    Capacitacion: { titulo: string, descripcion: longtext, fecha: date, estado_id: unsignedInteger, municipio_id: unsignedInteger, parroquia_id: unsignedInteger, status: string, relationships: { belongsToMany: User, belongsTo: 'Estado, Municipio' } }
+    Estado: { nombre_estado: string, abr: 'string nullable' }
+    Municipio: { nombre_municipio: string, estado_id: unsignedInteger, municipio_id: unsignedInteger, relationships: { belongsTo: Estado } }
+    Parroquia: { nombre_parroquia: string, estado_id: unsignedInteger, municipio_id: unsignedInteger, parroquia_id: unsignedInteger, relationships: { belongsTo: 'Estado, Municipio' } }
+    Asistencia: { fecha: date, asistio: boolean, alumno_id: unsignedInteger, capacitacion_id: unsignedInteger, relationships: { belongsTo: Capacitacion } }

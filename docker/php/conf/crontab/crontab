@@ -1,0 +1,19 @@
+* * * * * root date >/proc/1/fd/1 2>/proc/1/fd/2
+*/1 * * * * root /usr/local/bin/php /var/www/artisan events:check >/proc/1/fd/1 2>/proc/1/fd/2
+*/1 * * * * root /usr/local/bin/php /var/www/artisan alerts:check >/proc/1/fd/1 2>/proc/1/fd/2
+*/1 * * * * root /usr/local/bin/php /var/www/artisan backup:mysql >/proc/1/fd/1 2>/proc/1/fd/2
+*/3 * * * * root /usr/local/bin/php /var/www/artisan reports:daily daily >/proc/1/fd/1 2>/proc/1/fd/2
+*/3 * * * * root /usr/local/bin/php /var/www/artisan reports:daily weekly >/proc/1/fd/1 2>/proc/1/fd/2
+*/3 * * * * root /usr/local/bin/php /var/www/artisan service:check >/proc/1/fd/1 2>/proc/1/fd/2
+*/3 * * * * root /usr/local/bin/php /var/www/artisan service:check_expire >/proc/1/fd/1 2>/proc/1/fd/2
+
+#0 0 * * * root /usr/local/bin/php /var/www/artisan logs:compress >/proc/1/fd/1 2>/proc/1/fd/2
+#0 1 * * * root /usr/local/bin/php /var/www/artisan server:autoclean >/proc/1/fd/1 2>/proc/1/fd/2
+
+*/1 * * * * root /usr/local/bin/php /var/www/artisan insert:run >/proc/1/fd/1 2>/proc/1/fd/2
+*/1 * * * * root /usr/local/bin/php /var/www/artisan insert:run >/proc/1/fd/1 2>/proc/1/fd/2
+
+* * * * * root /usr/local/bin/php /var/www/artisan schedule:run >/proc/1/fd/1 2>/proc/1/fd/2
+
+
+# An empty line is required at the end of this file for a valid cron file

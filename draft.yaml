@@ -1,0 +1,91 @@
+models:
+
+  Scene:
+    name: string
+    meaning: string
+    description: string
+    usage: string
+    nanobanana: string
+    grok: string
+    construction_id: unsignedInteger
+    interaction_id: unsignedInteger
+    relationships:
+      belongsTo: Construction, Interaction
+    factory: false
+
+  Interaction:
+    title: string
+    type: string
+    relationships:
+      hasMany: Scene
+    factory: false
+
+  Construction:
+    title: string
+    type: string
+    relationships:
+      hasMany: Meaning, Scene
+    factory: false
+
+  Meaning:
+    title: string
+    description: longtext
+    construction_id: unsignedInteger
+    relationships:
+      belongsTo: Construction
+    factory: false
+
+  Capacitacion:
+    titulo: string
+    descripcion: longtext
+    fecha: date
+    estado_id: unsignedInteger
+    municipio_id: unsignedInteger
+    parroquia_id: unsignedInteger
+    status: string
+    relationships:
+      belongsToMany: User
+      belongsTo: Estado, Municipio
+    factory: false
+
+  Estado:
+    nombre_estado: string
+    abr: string nullable
+    factory: false
+
+  Municipio:
+    nombre_municipio: string
+    estado_id: unsignedInteger
+    municipio_id: unsignedInteger
+    relationships:
+      belongsTo: Estado
+    factory: false
+
+  Parroquia:
+    nombre_parroquia: string
+    estado_id: unsignedInteger
+    municipio_id: unsignedInteger
+    parroquia_id: unsignedInteger
+    relationships:
+      belongsTo: Estado, Municipio
+    factory: false
+
+  Asistencia:
+    fecha: date
+    asistio: boolean
+    alumno_id: unsignedInteger
+    capacitacion_id: unsignedInteger
+    relationships:
+      belongsTo: Capacitacion
+    factory: false
+
+
+  # No necesitas definir el modelo User si ya existe en Laravel, 
+  # pero debes añadir la relación inversa para que Blueprint genere la migración pivote.
+  User:
+    relationships:
+      belongsToMany: Capacitacion
+    factory: false
+    
+
+
