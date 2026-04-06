@@ -14,12 +14,12 @@ class ParametroDefinicionsTable
     {
         return $table
             ->columns([
+                TextColumn::make('parametro.nombre')
+                    ->sortable(),
                 TextColumn::make('definicion')
                     ->searchable(),
                 TextColumn::make('puntuacion')
                     ->numeric()
-                    ->sortable(),
-                TextColumn::make('parametro.nombre')
                     ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
