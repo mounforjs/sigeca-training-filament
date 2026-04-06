@@ -11,21 +11,18 @@ models:
     interaction_id: unsignedInteger
     relationships:
       belongsTo: Construction, Interaction
-    factory: false
 
   Interaction:
     title: string
     type: string
     relationships:
       hasMany: Scene
-    factory: false
 
   Construction:
     title: string
     type: string
     relationships:
       hasMany: Meaning, Scene
-    factory: false
 
   Meaning:
     title: string
@@ -38,20 +35,21 @@ models:
   Capacitacion:
     titulo: string
     descripcion: longtext
-    fecha: date
     estado_id: unsignedInteger
     municipio_id: unsignedInteger
     parroquia_id: unsignedInteger
+    fecha_inicio: date
+    fecha_final: date
     status: string
     relationships:
       belongsToMany: User
       belongsTo: Estado, Municipio
-    factory: false
+
 
   Estado:
     nombre_estado: string
     abr: string nullable
-    factory: false
+
 
   Municipio:
     nombre_municipio: string
@@ -59,7 +57,7 @@ models:
     municipio_id: unsignedInteger
     relationships:
       belongsTo: Estado
-    factory: false
+
 
   Parroquia:
     nombre_parroquia: string
@@ -68,7 +66,7 @@ models:
     parroquia_id: unsignedInteger
     relationships:
       belongsTo: Estado, Municipio
-    factory: false
+
 
   Asistencia:
     fecha: date
@@ -77,7 +75,14 @@ models:
     capacitacion_id: unsignedInteger
     relationships:
       belongsTo: Capacitacion
-    factory: false
+
+  Componente:
+    descripcion: longtext
+    horas: unsignedInteger
+    nivel_formacion_id: unsignedInteger
+    relationships:
+      belongsTo: Niveles
+
 
 
   # No necesitas definir el modelo User si ya existe en Laravel, 
@@ -85,7 +90,4 @@ models:
   User:
     relationships:
       belongsToMany: Capacitacion
-    factory: false
-    
-
 

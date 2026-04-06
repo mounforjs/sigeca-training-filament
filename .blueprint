@@ -9,17 +9,17 @@ created:
     - database/factories/ParroquiaFactory.php
     - database/factories/AsistenciaFactory.php
     - database/factories/UserFactory.php
-    - database/migrations/2026_04_01_164254_create_scenes_table.php
-    - database/migrations/2026_04_01_164255_create_interactions_table.php
-    - database/migrations/2026_04_01_164256_create_constructions_table.php
-    - database/migrations/2026_04_01_164257_create_meanings_table.php
-    - database/migrations/2026_04_01_164258_create_capacitacions_table.php
-    - database/migrations/2026_04_01_164259_create_estados_table.php
-    - database/migrations/2026_04_01_164300_create_municipios_table.php
-    - database/migrations/2026_04_01_164301_create_parroquias_table.php
-    - database/migrations/2026_04_01_164302_create_asistencias_table.php
-    - database/migrations/2026_04_01_164303_create_users_table.php
-    - database/migrations/2026_04_01_164304_create_capacitacion_user_table.php
+    - database/migrations/2026_04_01_211629_create_scenes_table.php
+    - database/migrations/2026_04_01_211630_create_interactions_table.php
+    - database/migrations/2026_04_01_211631_create_constructions_table.php
+    - database/migrations/2026_04_01_211632_create_meanings_table.php
+    - database/migrations/2026_04_01_211633_create_capacitacions_table.php
+    - database/migrations/2026_04_01_211634_create_estados_table.php
+    - database/migrations/2026_04_01_211635_create_municipios_table.php
+    - database/migrations/2026_04_01_211636_create_parroquias_table.php
+    - database/migrations/2026_04_01_211637_create_asistencias_table.php
+    - database/migrations/2026_04_01_211638_create_users_table.php
+    - database/migrations/2026_04_01_211639_create_capacitacion_user_table.php
     - app/Models/Scene.php
     - app/Models/Interaction.php
     - app/Models/Construction.php
@@ -31,13 +31,13 @@ created:
     - app/Models/Asistencia.php
     - app/Models/User.php
 models:
-    User: { relationships: { belongsToMany: Capacitacion } }
-    Scene: { name: string, meaning: string, description: string, usage: string, nanobanana: string, grok: string, construction_id: unsignedInteger, interaction_id: unsignedInteger, relationships: { belongsTo: 'Construction, Interaction' } }
-    Interaction: { title: string, type: string, relationships: { hasMany: Scene } }
-    Construction: { title: string, type: string, relationships: { hasMany: 'Meaning, Scene' } }
-    Meaning: { title: string, description: longtext, construction_id: unsignedInteger, relationships: { belongsTo: Construction } }
-    Capacitacion: { titulo: string, descripcion: longtext, fecha: date, estado_id: unsignedInteger, municipio_id: unsignedInteger, parroquia_id: unsignedInteger, status: string, relationships: { belongsToMany: User, belongsTo: 'Estado, Municipio' } }
-    Estado: { nombre_estado: string, abr: 'string nullable' }
-    Municipio: { nombre_municipio: string, estado_id: unsignedInteger, municipio_id: unsignedInteger, relationships: { belongsTo: Estado } }
-    Parroquia: { nombre_parroquia: string, estado_id: unsignedInteger, municipio_id: unsignedInteger, parroquia_id: unsignedInteger, relationships: { belongsTo: 'Estado, Municipio' } }
-    Asistencia: { fecha: date, asistio: boolean, alumno_id: unsignedInteger, capacitacion_id: unsignedInteger, relationships: { belongsTo: Capacitacion } }
+    User: { relationships: { belongsToMany: Capacitacion }, factory: false }
+    Scene: { name: string, meaning: string, description: string, usage: string, nanobanana: string, grok: string, construction_id: unsignedInteger, interaction_id: unsignedInteger, relationships: { belongsTo: 'Construction, Interaction' }, factory: false }
+    Interaction: { title: string, type: string, relationships: { hasMany: Scene }, factory: false }
+    Construction: { title: string, type: string, relationships: { hasMany: 'Meaning, Scene' }, factory: false }
+    Meaning: { title: string, description: longtext, construction_id: unsignedInteger, relationships: { belongsTo: Construction }, factory: false }
+    Capacitacion: { titulo: string, descripcion: longtext, estado_id: unsignedInteger, municipio_id: unsignedInteger, parroquia_id: unsignedInteger, fecha_inicio: date, fecha_final: date, status: string, relationships: { belongsToMany: User, belongsTo: 'Estado, Municipio' }, factory: false }
+    Estado: { nombre_estado: string, abr: 'string nullable', factory: false }
+    Municipio: { nombre_municipio: string, estado_id: unsignedInteger, municipio_id: unsignedInteger, relationships: { belongsTo: Estado }, factory: false }
+    Parroquia: { nombre_parroquia: string, estado_id: unsignedInteger, municipio_id: unsignedInteger, parroquia_id: unsignedInteger, relationships: { belongsTo: 'Estado, Municipio' }, factory: false }
+    Asistencia: { fecha: date, asistio: boolean, alumno_id: unsignedInteger, capacitacion_id: unsignedInteger, relationships: { belongsTo: Capacitacion }, factory: false }

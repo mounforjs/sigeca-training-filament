@@ -41,12 +41,14 @@ class RegistrarAsistencia extends Page implements HasForms
         return $form
             ->schema([
                 Section::make('Control de Asistencia')
-                    ->description("Capacitación: {$this->record->nombre}")
+                    ->description("Capacitación: {$this->record->title}")
                     ->schema([
                         DatePicker::make('fecha')
                             ->label('Fecha de la Sesión')
                             ->required()
                             ->live() // Al cambiar la fecha, ejecutamos lógica
+                            ->minDate($this->record->fecha_inicio)
+                            ->maxDate($this->record->fecha_final)
                             ->afterStateUpdated(fn () => $this->cargarAsistencia()),
 
                         CheckboxList::make('asistentes')

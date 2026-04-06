@@ -2,6 +2,7 @@
 
 namespace App\Filament\Resources\Capacitacions;
 
+use App\Filament\Pages\ReporteCustom;
 use App\Filament\Resources\Capacitacions\Pages\CreateCapacitacion;
 use App\Filament\Resources\Capacitacions\Pages\EditCapacitacion;
 use App\Filament\Resources\Capacitacions\Pages\ListCapacitacions;
@@ -48,13 +49,14 @@ class CapacitacionResource extends Resource
             'create' => CreateCapacitacion::route('/create'),
             'edit' => EditCapacitacion::route('/{record}/edit'),
             'registrar-asistencia' => RegistrarAsistencia::route('/{record}/asistencia'),
+            'matricula' => ReporteCustom::route('/matricula/{record}'),
         ];
     }
 
     public static function getActions(): array
     {
-    return [
-        
-    ];
+        return [
+            
+        ];
     }
 }

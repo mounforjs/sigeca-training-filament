@@ -11,14 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('capacitacions', function (Blueprint $table) {
+        Schema::create('capacitaciones', function (Blueprint $table) {
             $table->id();
             $table->string('titulo');
             $table->longText('descripcion');
-            $table->date('fecha');
-            $table->foreignId('estado_id');
-            $table->foreignId('municipio_id');
-            $table->unsignedInteger('parroquia_id');
+            $table->foreignId('estado_id')->nullable();
+            $table->foreignId('municipio_id')->nullable();
+            $table->foreignId('parroquia_id')->nullable();
+            $table->date('fecha_inicio');
+            $table->date('fecha_final');
             $table->string('status');
             $table->timestamps();
         });

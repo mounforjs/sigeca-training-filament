@@ -14,7 +14,7 @@ class User extends Authenticatable
 {
     /** @use \Illuminate\Database\Eloquent\Factories\HasFactory<\Database\Factories\UserFactory> */
     use Notifiable, HasFactory; // En Laravel 11+, HasFactory se incluye a menudo vía Traits internos o se añade manualmente
-
+  
     /**
      * The attributes that are mass assignable.
      *
@@ -49,9 +49,14 @@ class User extends Authenticatable
         ];
     }
 
-    public function capacitacions(): BelongsToMany
+    public function capacitaciones(): BelongsToMany
     {
-        return $this->belongsToMany(Capacitacion::class);
+        return $this->belongsToMany(Capacitacion::class, "capacitaciones_users");
+    }
+
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class);
     }
 }
 

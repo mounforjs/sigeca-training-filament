@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\NivelFormacion;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,12 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('asistencias', function (Blueprint $table) {
+        Schema::create('componentes', function (Blueprint $table) {
             $table->id();
-            $table->date('fecha');
-            $table->boolean('asistio');
-            $table->unsignedInteger('alumno_id');
-            $table->foreignId('capacitacion_id');
+            $table->string("descripcion");
+            $table->unsignedInteger("horas");
+            $table->foreignIdFor(NivelFormacion::class, "nivel_formacion_id")->constrained();
             $table->timestamps();
         });
     }
@@ -26,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('asistencias');
+        Schema::dropIfExists('componentes');
     }
 };

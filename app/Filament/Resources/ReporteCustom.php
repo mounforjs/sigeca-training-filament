@@ -2,14 +2,17 @@
 
 namespace App\Filament\Pages;
 
+use App\Filament\Resources\Capacitacions\CapacitacionResource;
+use App\Models\Capacitacion;
 use App\Models\User;
 use Filament\Actions\Action;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Concerns\InteractsWithForms;
 use Filament\Forms\Contracts\HasForms;
 use Filament\Notifications\Notification;
-use Filament\Pages\Page;
+use Filament\Resources\Pages\Page;  // Usar este en vez de use Filament\Pages\Page;
 use Filament\Schemas\Components\Actions;
 use Filament\Schemas\Components\Form;
 use Filament\Schemas\Schema;
@@ -25,9 +28,11 @@ class ReporteCustom extends Page implements HasTable, HasForms
     
     use InteractsWithTable, InteractsWithForms;
 
-    #[Url]
-    public ?int $capacitacion_id = null;
+    
+   public ?int $capacitacion_id = null;
 
+    protected static string $resource = CapacitacionResource::class;
+    
     protected string $view = 'filament.pages.reporte-custom';
     protected static string | \BackedEnum | null $navigationIcon = 'heroicon-o-table-cells';
 
@@ -35,8 +40,10 @@ class ReporteCustom extends Page implements HasTable, HasForms
     public ?array $headerData = [];
 
 
-    public function mount(): void
+    public function mount(Capacitacion $record): void
     {
+        $this->capacitacion_id = $record->id;
+        //dd($this->capacitacion_id);
         // Get 'id' from the URL parameter (e.g., /admin/reporte-custom/5)
         //$idFromUrl = request()->route('record');
         $this->headerForm->fill([
@@ -72,6 +79,10 @@ class ReporteCustom extends Page implements HasTable, HasForms
                 ->getOptionLabelUsing(fn ($value): ?string => DB::table('users')->find($value)?->name)
                 ->columnSpan(2), // Ajusta el ancho aquí
 
+            Hidden::make("capacitacion_id")
+                ->default(fn () => $this->capacitacion_id)
+                ->dehydrated(true),
+
             Actions::make([
                 Action::make('registrar')
                     ->label('Registrar')
@@ -95,7 +106,7 @@ class ReporteCustom extends Page implements HasTable, HasForms
         return $table
             ->query(function () {
                 $search = $this->headerData['search'] ?? null;
-                $capacitacionId = 1;
+                $capacitacionId = $this->headerData['capacitacion_id'];
                 // Consulta SQL Custom
                 $query = User::query()
                     ->select('id','name', 'email', 'created_at');
@@ -144,15 +155,13 @@ class ReporteCustom extends Page implements HasTable, HasForms
     // Acción del botón Registrar
     public function registrarAction()
     {
-        
-       
         $user = User::find($this->headerData['user_id']);
 
-        $existe = $user->capacitacions()
+        $yaRegistrado = $user->capacitacions()
                     ->where('capacitacion_id', $this->headerData['capacitacion_id'])
                     ->exists();
 
-        if ($existe) {
+        if ($yaRegistrado) {
             Notification::make()
                 ->title('Usuario ya registrado')
                 ->warning()

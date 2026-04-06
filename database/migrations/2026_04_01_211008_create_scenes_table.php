@@ -19,8 +19,8 @@ return new class extends Migration
             $table->string('usage');
             $table->string('nanobanana');
             $table->string('grok');
-            $table->foreignId('construction_id');
-            $table->foreignId('interaction_id');
+            $table->unsignedInteger('construction_id');
+            $table->unsignedInteger('interaction_id');
             $table->timestamps();
         });
     }

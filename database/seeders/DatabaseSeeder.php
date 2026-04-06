@@ -3,11 +3,19 @@
 namespace Database\Seeders;
 
 use App\Models\Capacitacion;
+use App\Models\Certificado;
 use App\Models\Estado;
+use App\Models\Evaluacion;
 use App\Models\Municipio;
+use App\Models\NivelFormacion;
+use App\Models\ParametroDefinicion;
+use App\Models\ParametroEvaluacion;
 use App\Models\Parroquia;
+use App\Models\Proyecto;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class DatabaseSeeder extends Seeder
@@ -19,20 +27,170 @@ class DatabaseSeeder extends Seeder
     {
         // User::factory(10)->create();
 
-        User::factory()->create([
+        
+        $users = User::factory()->count(10)->create();
+
+        $roles = [
+            ['rol' => 'Administrador'],
+            ['rol' => 'Transcriptor'],
+            ['rol' => 'Representante'],
+            ['rol' => 'DocenciaI'],
+            ['rol' => 'DocenciaII']
+        ];
+
+        Role::insert($roles);
+
+
+        User::factory()->hasAttached(Role::find(1))->create([
             'name' => 'admin',
             'email' => 'admin@gmail.com',
             'password' => Hash::make('321.qwerty'),
             'email_verified_at' => now(),
         ]);
 
-        $users = User::factory()->count(10)->create();
-        
+
         Capacitacion::factory()
             ->hasAttached($users) 
             ->create();
 
+        $proyectos = 
+        [
+            ['titulo' => 'Formadores en el Programa Nacional de Catastro', 'descripcion' => 'Inducción para ser formador en el Programa Nacional de Catastro'],
+            ['titulo' => 'Formación en QGIS 2014' , 'descripcion' => 'Formación en QGIS 2014'],
+            ['titulo' => 'Lectura e interpretación de mapas' , 'descripcion' => 'Formación en el manejo cartográfico.'],
+        ];
+
+        Proyecto::insert($proyectos);
+
+        $niveles = 
+        [
+            ['descripcion' => "	Nivel I: Formador", 'fecha' => now(), 'proyecto_id' => 1],
+            ['descripcion' => "Nivel II: Facilitador", 'fecha' => now(), 'proyecto_id' => 1],
+            ['descripcion' => "Nivel III: Auxiliar catastral", 'fecha' => now(), 'proyecto_id' => 1],
+            ['descripcion' => "Clasificador de campo", 'fecha' => now(), 'proyecto_id' => 1],
+            ['descripcion' => "Coordinador", 'fecha' => now(), 'proyecto_id' => 1],
+            ['descripcion' => "Transcriptor", 'fecha' => now(), 'proyecto_id' => 1],
+            ['descripcion' => "Usuario de Estación Total", 'fecha' => now(), 'proyecto_id' => 1],
+            ['descripcion' => "Digitalizador", 'fecha' => now(), 'proyecto_id' => 1],
+            ['descripcion' => "Transcriptor (GVSIG Talleres Externos)", 'fecha' => now(), 'proyecto_id' => 1],
+            ['descripcion' => "Coordinador", 'fecha' => now(), 'proyecto_id' => 1],
+            ['descripcion' => "Digitalizador", 'fecha' => now(), 'proyecto_id' => 1],
+            ['descripcion' => "Conversatorio Comunal", 'fecha' => now(), 'proyecto_id' => 1],
+        ];
+
+        NivelFormacion::insert($niveles);
+
+
+        $evaluaciones = 
+        [
+            ['descripcion' => 'Evaluación cualitativa', 'nombre_corto' => 'E. Cualitativa'],
+            ['descripcion' => 'Evaluación integral', 'nombre_corto' => 'E. Integral'],
+            ['descripcion' => 'Evaluación practica de campo (Toponimia)', 'nombre_corto' => 'E. Campo (T)'],
+            ['descripcion' => 'Evaluación practica de campo (Catastro)', 'nombre_corto' => 'E. Campo (C)'],
+        ];
+
+        Evaluacion::insert($evaluaciones);
+
+
+        $evaluaciones_niveles = 
+        [
+            ['nivel_formacion_id' => 1, "evaluacion_id" => 4, "ponderacion" => 75 ],
+            ['nivel_formacion_id' => 2, "evaluacion_id" => 1, "ponderacion" => 20],
+            ['nivel_formacion_id' => 3, "evaluacion_id" => 1, "ponderacion" => 20],
+            ['nivel_formacion_id' => 3, "evaluacion_id" => 2, "ponderacion" => 20],
+            ['nivel_formacion_id' => 3, "evaluacion_id" => 3, "ponderacion" => 20],
+            ['nivel_formacion_id' => 3, "evaluacion_id" => 3, "ponderacion" => 20],
+            ['nivel_formacion_id' => 4, "evaluacion_id" => 2, "ponderacion" => 20],
+            ['nivel_formacion_id' => 4, "evaluacion_id" => 1, "ponderacion" => 20],
+            ['nivel_formacion_id' => 6, "evaluacion_id" => 1, "ponderacion" => 50],
+            ['nivel_formacion_id' => 7, "evaluacion_id" => 1, "ponderacion" => 50],
+            ['nivel_formacion_id' => 2, "evaluacion_id" => 2, "ponderacion" => 20],
+            ['nivel_formacion_id' => 2, "evaluacion_id" => 2, "ponderacion" => 20],
+            ['nivel_formacion_id' => 2, "evaluacion_id" => 4, "ponderacion" => 20],
+            ['nivel_formacion_id' => 9, "evaluacion_id" => 1, "ponderacion" => 50],
+            ['nivel_formacion_id' => 8, "evaluacion_id" => 1, "ponderacion" => 40],
+        ];
+
+        DB::table("evaluacion_nivel_formacion")->insert($evaluaciones_niveles);
+
+
+        $parametos_evaluacion = [
+            ['evaluacion_id' => 3, 'nombre' => 'Orientación', 'descripcion' => 'Presenta aptitudes innatas para ubicarse en el entornoespacial donde realiza la actividad. Asi mismo presenta capacidades para identificar cada uno de los elementos del medio urbano que debe levantar.'],
+            ['evaluacion_id' => 3, 'nombre' => 'Manejo de instrumentos', 'descripcion' => 'Utiliza adecuadamente los recursos (planillas, brújula, ortofotomapas y kit de campo), suministrados para el levantamiento y registro de la data toponímica.'],
+            ['evaluacion_id' => 3, 'nombre' => 'Comunicación', 'descripcion' => 'Se expresa con voz clara (velocidad, entonación y pronunciación adecuada) y establece un feedback fluido con la comunidad donde se realiza el levantamiento y no hace juicios de valores ante las situaciones encontradas en el proceso.'],
+            ['evaluacion_id' => 3, 'nombre' => 'Llenado de la ficha catastral', 'descripcion' => 'Muestra capacidad para recolección y transcripción de toda la data registrada en la ficha catastral, favoreciendo de este modo el levantamiento adecuado de la información.'],
+            ['evaluacion_id' => 3, 'nombre' => 'Manejo de unidades de medidas', 'descripcion' => 'Demuestra capacidad y destrezas en el manejo de unidades de longitud y áreas concebidas en el sistema métrico decimal.'],
+            ['evaluacion_id' => 3, 'nombre' => 'Ortografía ', 'descripcion' => 'Muestra capacidad para recolección y transcripción de toda la data registrada en la ficha catastral, favoreciendo de este modo el levantamiento adecuado de la información.'],
+            ['evaluacion_id' => 3, 'nombre' => 'Dibujo ', 'descripcion' => 'Representa de forma clara y precisa los croquisde los inmuebles levantados.'],
+            ['evaluacion_id' => 2, 'nombre' => 'Orientación ', 'descripcion' => 'Presenta aptitudes innatas para ubicarse en el entornoespacial donde realiza la actividad. Asi mismo presenta capacidades para identificar cada uno de los elementos del medio urbano que debe levantar.'],
+            ['evaluacion_id' => 3, 'nombre' => 'Convocatoria a los Comités de tieeras urbanas ', 'descripcion' => 'Articula efectivamente con las organizaciones sociales para su participación en el proceso de levantamiento de información toponímica.'],
+            ['evaluacion_id' => 2, 'nombre' => 'Manejo de instrumentos', 'descripcion' => 'Utiliza adecuadamente los recursos (planillas, brújula, ortofotomapas, y kit de campos), suministrados para el levantamiento y registro de la data toponímica.'],
+            ['evaluacion_id' => 2, 'nombre' => 'Comunicación', 'descripcion' => 'Se expresa con voz clara (velocidad, entonación y pronunciación adecuada) y establece un feedback fluido con la comunidad donde se realiza el levantamiento y no hace juicios de valores ante las situaciones encontradas en el proceso.'],
+            ['evaluacion_id' => 2, 'nombre' => 'Resolución de problemas', 'descripcion' => 'Muestra buena capacidad para establecer los correctivos necesarios ante la problemática presentada en el levantamiento de información.'],
+            ['evaluacion_id' => 2, 'nombre' => 'Manejo de fuentes', 'descripcion' => 'Demuestra capacidad de analisis y adecuado manejo de las fuentes primarias (comunidad) y secundarias (cartográficas, bibliográficas, estadísticas y jurídicas)..'],
+            ['evaluacion_id' => 2, 'nombre' => 'Convocatoria a los consejos comunales', 'descripcion' => 'Articula efectivamente con las organizaciones sociales para su participación en el proceso de levantamiento de información toponímica.'],
+            ['evaluacion_id' => 2, 'nombre' => 'Ortografía', 'descripcion' => 'Escribe de forma clara y correcta toda la información toponímica levantada en el campo.'],
+            ['evaluacion_id' => 1, 'nombre' => 'Participación', 'descripcion' => 'Escribe de forma clara y correcta toda la información toponímica levantada en el campo.'],
+            ['evaluacion_id' => 1, 'nombre' => 'Trabajo en equipo', 'descripcion' => 'Escribe de forma clara y correcta toda la información toponímica levantada en el campo.'],
+            ['evaluacion_id' => 1, 'nombre' => 'Actitud', 'descripcion' => ''],
+            ['evaluacion_id' => 1, 'nombre' => 'Interés', 'descripcion' => ''],
+            ['evaluacion_id' => 1, 'nombre' => 'Disposición', 'descripcion' => ''],
+            ['evaluacion_id' => 1, 'nombre' => 'Puntualidad', 'descripcion' => ''],
+        ];
+
+        ParametroEvaluacion::insert($parametos_evaluacion);
+
+
+        $parametros_definiciones = [
+            ["parametro_id" => 1, "definicion" => "Buena" , "puntuacion" => 2],
+            ["parametro_id" => 1, "definicion" => "Mala" , "puntuacion" => 0],
+            ["parametro_id" => 2, "definicion" => "Buena" , "puntuacion" => 3],
+            ["parametro_id" => 2, "definicion" => "Regular" , "puntuacion" => 2],
+            ["parametro_id" => 2, "definicion" => "Mala" , "puntuacion" => 1],
+           
+            ["parametro_id" => 3, "definicion" => "Buena" , "puntuacion" => 3],
+            ["parametro_id" => 3, "definicion" => "Regular" , "puntuacion" => 2],
+            ["parametro_id" => 3, "definicion" => "Mala" , "puntuacion" => 1],
+            
+            ["parametro_id" => 4, "definicion" => "Buena" , "puntuacion" => 3],
+            ["parametro_id" => 4, "definicion" => "Regular" , "puntuacion" => 2],
+            ["parametro_id" => 4, "definicion" => "Mala" , "puntuacion" => 1],
+           
+            ["parametro_id" => 5, "definicion" => "Buena" , "puntuacion" => 2],
+            ["parametro_id" => 5, "definicion" => "Regular" , "puntuacion" => 1],
+            ["parametro_id" => 5, "definicion" => "Mala" , "puntuacion" => 0],
+          
+            ["parametro_id" => 6, "definicion" => "Buena" , "puntuacion" => 2],
+            ["parametro_id" => 6, "definicion" => "Mala" , "puntuacion" => 0],
+            ["parametro_id" => 7, "definicion" => "Buena" , "puntuacion" => 2],
+            ["parametro_id" => 7, "definicion" => "Mala" , "puntuacion" => 0],
+
+            ["parametro_id" => 8, "definicion" => "Buena" , "puntuacion" => 3],
+            ["parametro_id" => 8, "definicion" => "Regular" , "puntuacion" => 2],
+            ["parametro_id" => 8, "definicion" => "Mala" , "puntuacion" => 1],
+
+            ["parametro_id" => 11, "definicion" => "Buena" , "puntuacion" => 3],
+            ["parametro_id" => 11, "definicion" => "Regular" , "puntuacion" => 2],
+            ["parametro_id" => 11, "definicion" => "Mala" , "puntuacion" => 1],
+
+            ["parametro_id" => 12, "definicion" => "Buena" , "puntuacion" => 3],
+            ["parametro_id" => 12, "definicion" => "Mala" , "puntuacion" => 2],
+        ];
+
+        ParametroDefinicion::insert($parametros_definiciones);
         
+        $titulos = 
+        [
+            ['titulo' => 'Formadores en el Programa Nacional de Catastro', 'nivel_formacion_id' => 1],
+            ['titulo' => 'Formación introductoria a gvSIG', 'nivel_formacion_id' => 1],
+            ['titulo' => 'Alianza Corpoelec - IGVSB', 'nivel_formacion_id' => 1],
+            ['titulo' => 'Formación introductoria a GPS con navegador', 'nivel_formacion_id' => 2],
+            ['titulo' => 'Formación introductoria a gvSIG', 'nivel_formacion_id' => 2],
+            ['titulo' => 'Lectura e interpretación de mapas', 'nivel_formacion_id' => 2],
+            ['titulo' => 'Formación introductoria a GPS con navegador', 'nivel_formacion_id' => 2]
+        ];
+
+        Certificado::insert($titulos);
 
         $now = now();
 

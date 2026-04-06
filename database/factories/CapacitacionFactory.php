@@ -2,8 +2,9 @@
 
 namespace Database\Factories;
 
-use App\Models\Municipio;
 use App\Models\Estado;
+use App\Models\Municipio;
+use App\Models\Parroquia;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class CapacitacionFactory extends Factory
@@ -13,13 +14,15 @@ class CapacitacionFactory extends Factory
      */
     public function definition(): array
     {
+
         return [
             'titulo' => fake()->word(),
             'descripcion' => fake()->text(),
-            'fecha' => fake()->date(),
-            'estado_id' => Estado::factory(),
-            'municipio_id' => Municipio::factory(),
-            'parroquia_id' => fake()->randomNumber(),
+            'estado_id' => null,
+            'municipio_id' => null,
+            'parroquia_id' => null,
+            'fecha_inicio' => fake()->date(),
+            'fecha_final' => fake()->date(),
             'status' => fake()->word(),
         ];
     }

@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\;
+use App\Models\Municipio;
 use App\Models\Estado;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -16,7 +16,7 @@ class ParroquiaFactory extends Factory
         return [
             'nombre_parroquia' => fake()->word(),
             'estado_id' => Estado::factory(),
-            'municipio_id' => ::factory(),
+            'municipio_id' => Municipio::factory(),
             'parroquia_id' => fake()->randomNumber(),
         ];
     }

@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\;
+use App\Models\Interaction;
 use App\Models\Construction;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -21,7 +21,7 @@ class SceneFactory extends Factory
             'nanobanana' => fake()->word(),
             'grok' => fake()->word(),
             'construction_id' => Construction::factory(),
-            'interaction_id' => ::factory(),
+            'interaction_id' => Interaction::factory(),
         ];
     }
 }
