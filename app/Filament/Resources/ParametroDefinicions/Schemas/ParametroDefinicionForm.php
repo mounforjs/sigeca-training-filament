@@ -16,7 +16,7 @@ class ParametroDefinicionForm
             ->schema([
                 Section::make("Datos")
                 ->schema([
-                    Select::make('parametro.nombre')
+                    Select::make('parametro_id')
                         ->required()
                         ->options(function() {
                             return ParametroEvaluacion::query()

@@ -70,12 +70,12 @@ class DatabaseSeeder extends Seeder
             ['descripcion' => "Clasificador de campo", 'fecha' => now(), 'proyecto_id' => 1],
             ['descripcion' => "Coordinador", 'fecha' => now(), 'proyecto_id' => 1],
             ['descripcion' => "Transcriptor", 'fecha' => now(), 'proyecto_id' => 1],
-            ['descripcion' => "Usuario de Estación Total", 'fecha' => now(), 'proyecto_id' => 1],
-            ['descripcion' => "Digitalizador", 'fecha' => now(), 'proyecto_id' => 1],
-            ['descripcion' => "Transcriptor (GVSIG Talleres Externos)", 'fecha' => now(), 'proyecto_id' => 1],
-            ['descripcion' => "Coordinador", 'fecha' => now(), 'proyecto_id' => 1],
-            ['descripcion' => "Digitalizador", 'fecha' => now(), 'proyecto_id' => 1],
-            ['descripcion' => "Conversatorio Comunal", 'fecha' => now(), 'proyecto_id' => 1],
+            ['descripcion' => "Usuario de Estación Total", 'fecha' => now(), 'proyecto_id' => 2],
+            ['descripcion' => "Digitalizador", 'fecha' => now(), 'proyecto_id' => 2],
+            ['descripcion' => "Transcriptor (GVSIG Talleres Externos)", 'fecha' => now(), 'proyecto_id' => 2],
+            ['descripcion' => "Coordinador", 'fecha' => now(), 'proyecto_id' => 3],
+            ['descripcion' => "Digitalizador", 'fecha' => now(), 'proyecto_id' => 3],
+            ['descripcion' => "Conversatorio Comunal", 'fecha' => now(), 'proyecto_id' => 3],
         ];
 
         NivelFormacion::insert($niveles);

@@ -2,8 +2,11 @@
 
 namespace App\Filament\Resources\NivelFormacions\Schemas;
 
+use App\Models\Proyecto;
 use Filament\Forms\Components\DatePicker;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class NivelFormacionForm
@@ -11,14 +14,26 @@ class NivelFormacionForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
-            ->components([
-                TextInput::make('descripcion')
-                    ->required(),
-                DatePicker::make('fecha')
-                    ->required(),
-                TextInput::make('proyecto_id')
-                    ->required()
-                    ->numeric(),
+            ->schema([
+                Section::make('proyecto_id')
+                    ->schema([
+                        Select::make('proyecto_id')
+                            ->label("Proyecto")
+                            ->options(function () {
+                                return Proyecto::query()
+                                    ->orderBy('id', 'asc')
+                                    ->get()
+                                    ->mapWithKeys( function($item) {
+                                        return [ $item->id => "$item->id | $item->titulo"];
+                                    });
+                            }), 
+                        TextInput::make('descripcion')
+                            ->required(),
+                        DatePicker::make('fecha')
+                            ->required(),
+                
+                ])
+                
             ]);
     }
 }
