@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('evaluaciones', function (Blueprint $table) {
             $table->id();
-            $table->string("descripcion");
+            $table->longText("descripcion");
             $table->string("nombre_corto")->nullable();
             $table->timestamp("created_at")->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
