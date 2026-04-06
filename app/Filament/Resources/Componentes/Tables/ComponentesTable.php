@@ -19,7 +19,7 @@ class ComponentesTable
                 TextColumn::make('horas')
                     ->numeric()
                     ->sortable(),
-                TextColumn::make('nivel_formacion_id')
+                TextColumn::make('nivelFormacion.descripcion')
                     ->numeric()
                     ->sortable(),
                 TextColumn::make('created_at')

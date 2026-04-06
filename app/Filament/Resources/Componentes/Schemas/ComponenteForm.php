@@ -21,7 +21,23 @@ class ComponenteForm
                 TextInput::make('horas')
                     ->required()
                     ->numeric(),
-
+                Select::make('proyecto_id')
+                    ->options(function () {
+                        return Proyecto::all()->pluck('titulo', "id");
+                    })
+                    ->label("Proyecto")
+                    ->live()
+                    ->dehydrated(false)
+                    ->preload(),
+                Select::make('nivel_formacion_id')
+                    ->label('Nivel de Formacion')
+                    ->options(function(Get $get) {
+                        return NivelFormacion::where('proyecto_id', $get('proyecto_id'))
+                                ->orderBy('id', 'asc')
+                                ->pluck('descripcion', 'id')
+                                ->toArray();
+                    })
+                    ->preload(),
                 
             ]);
     }
