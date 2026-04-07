@@ -15,7 +15,8 @@ class NivelFormacionForm
     {
         return $schema
             ->schema([
-                Section::make('Datos Nivel de Formacion')
+                Section::make('Nivel de Formacion')
+                    ->description("Datos del Nivel de Formacion")
                     ->schema([
                         Select::make('proyecto_id')
                             ->label("Proyecto")

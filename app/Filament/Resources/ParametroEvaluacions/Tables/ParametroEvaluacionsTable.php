@@ -14,13 +14,13 @@ class ParametroEvaluacionsTable
     {
         return $table
             ->columns([
+                TextColumn::make('evaluacion.descripcion')
+                    ->sortable(),
                 TextColumn::make('nombre')
                     ->searchable(),
                 TextColumn::make('descripcion')
                     ->searchable()
                     ->words(5),
-                TextColumn::make('evaluacion.descripcion')
-                    ->sortable(),
                 TextColumn::make('created_at')
                     ->dateTime()
                     ->sortable()

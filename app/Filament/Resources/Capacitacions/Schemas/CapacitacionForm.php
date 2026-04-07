@@ -28,7 +28,8 @@ class CapacitacionForm
                     ->description("Capacitación")
                     ->schema([
                         TextInput::make('titulo')
-                            ->required(),
+                            ->required()
+                            ->columnSpanFull(),
                         Textarea::make('descripcion')
                             ->required()
                             ->columnSpanFull(),

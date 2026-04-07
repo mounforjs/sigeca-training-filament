@@ -16,4 +16,14 @@ class ListRoles extends ListRecords
             CreateAction::make(),
         ];
     }
+
+    public function getTitle(): string
+    {
+        return "Roles";
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return [];
+    }   
 }

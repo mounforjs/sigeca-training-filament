@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ParametroEvaluacions\Pages;
 use App\Filament\Resources\ParametroEvaluacions\ParametroEvaluacionResource;
 use Filament\Actions\DeleteAction;
 use Filament\Resources\Pages\EditRecord;
+use Illuminate\Contracts\Support\Htmlable;
 
 class EditParametroEvaluacion extends EditRecord
 {
@@ -15,5 +16,15 @@ class EditParametroEvaluacion extends EditRecord
         return [
             DeleteAction::make(),
         ];
+    }
+
+    public function getTitle(): string | Htmlable
+    {
+        return "Evaluacion";
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return [];
     }
 }

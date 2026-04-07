@@ -14,6 +14,8 @@ class ParametroDefinicionsTable
     {
         return $table
             ->columns([
+                TextColumn::make('parametro.evaluacion.descripcion')
+                    ->sortable(),
                 TextColumn::make('parametro.nombre')
                     ->sortable(),
                 TextColumn::make('definicion')

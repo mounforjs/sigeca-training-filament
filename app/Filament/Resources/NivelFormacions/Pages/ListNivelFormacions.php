@@ -5,6 +5,7 @@ namespace App\Filament\Resources\NivelFormacions\Pages;
 use App\Filament\Resources\NivelFormacions\NivelFormacionResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Contracts\Support\Htmlable;
 
 class ListNivelFormacions extends ListRecords
 {
@@ -15,5 +16,15 @@ class ListNivelFormacions extends ListRecords
         return [
             CreateAction::make(),
         ];
+    }
+
+    public function getTitle(): string | Htmlable
+    {
+        return "Niveles de Formacion";
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return [];
     }
 }

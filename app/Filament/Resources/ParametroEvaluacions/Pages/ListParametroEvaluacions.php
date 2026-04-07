@@ -5,6 +5,7 @@ namespace App\Filament\Resources\ParametroEvaluacions\Pages;
 use App\Filament\Resources\ParametroEvaluacions\ParametroEvaluacionResource;
 use Filament\Actions\CreateAction;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Contracts\Support\Htmlable;
 
 class ListParametroEvaluacions extends ListRecords
 {
@@ -15,5 +16,15 @@ class ListParametroEvaluacions extends ListRecords
         return [
             CreateAction::make(),
         ];
+    }
+
+    public function getTitle(): string | Htmlable
+    {
+        return "Parametros";
+    }
+
+    public function getBreadcrumbs(): array
+    {
+        return [];
     }
 }

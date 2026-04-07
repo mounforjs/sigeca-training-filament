@@ -14,6 +14,7 @@ class EvaluacionForm
         return $schema
             ->schema([
                 Section::make("Evaluacion")
+                    ->description("Registro de evaluacion")
                 ->schema([
                     TextInput::make('nombre_corto'),
                     RichEditor::make('descripcion')

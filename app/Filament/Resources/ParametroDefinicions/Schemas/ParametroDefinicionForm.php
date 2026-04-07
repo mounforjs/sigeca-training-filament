@@ -14,9 +14,11 @@ class ParametroDefinicionForm
     {
         return $schema
             ->schema([
-                Section::make("Datos")
+                Section::make("Registro")
+                    ->description("Registro de Definicion")
                 ->schema([
                     Select::make('parametro_id')
+                        ->label("Parametro")
                         ->required()
                         ->options(function() {
                             return ParametroEvaluacion::query()
