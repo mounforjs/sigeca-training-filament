@@ -14,7 +14,7 @@ class ComponentesTable
     {
         return $table
             ->columns([
-                TextColumn::make('descripcion')
+                TextColumn::make('titulo')
                     ->searchable(),
                 TextColumn::make('horas')
                     ->numeric()

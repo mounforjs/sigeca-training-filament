@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Capacitacion;
 use App\Models\Certificado;
+use App\Models\Componente;
 use App\Models\Estado;
 use App\Models\Evaluacion;
 use App\Models\Municipio;
@@ -51,7 +52,11 @@ class DatabaseSeeder extends Seeder
 
         Capacitacion::factory()
             ->hasAttached($users) 
-            ->create();
+            ->create(
+                ['estado_id' => 5, 
+                'municipio_id' => 3, 
+                'parroquia_id' => 7,
+                'fecha_inicio' => "2026/04/01", 'fecha_final' => "2026/04/10" ]);
 
         $proyectos = 
         [
@@ -64,7 +69,7 @@ class DatabaseSeeder extends Seeder
 
         $niveles = 
         [
-            ['descripcion' => "	Nivel I: Formador", 'fecha' => now(), 'proyecto_id' => 1],
+            ['descripcion' => "Nivel I: Formador", 'fecha' => now(), 'proyecto_id' => 1],
             ['descripcion' => "Nivel II: Facilitador", 'fecha' => now(), 'proyecto_id' => 1],
             ['descripcion' => "Nivel III: Auxiliar catastral", 'fecha' => now(), 'proyecto_id' => 1],
             ['descripcion' => "Clasificador de campo", 'fecha' => now(), 'proyecto_id' => 1],
@@ -79,6 +84,22 @@ class DatabaseSeeder extends Seeder
         ];
 
         NivelFormacion::insert($niveles);
+
+
+        $componentes = [
+            ['titulo' => 'Lectura e Interpretacion de Mapas' , 'horas' => 10 , 'nivel_formacion_id' => 1 ],
+            ['titulo' => 'Bases de datos geoespacial' , 'horas' => 10 , 'nivel_formacion_id' => 1 ],
+            ['titulo' => 'Fundamentos de SIG' , 'horas' => 10 , 'nivel_formacion_id' => 1 ],
+            ['titulo' => 'Análisis espacial' , 'horas' => 10 , 'nivel_formacion_id' => 1 ],
+            ['titulo' => 'Lectura e Interpretación de Mapas' , 'horas' => 10 , 'nivel_formacion_id' => 1 ],
+            ['titulo' => 'SIG QGIS' , 'horas' => 10 , 'nivel_formacion_id' => 1 ],
+            ['titulo' => 'Formación introductoria a GPS con navegador' , 'horas' => 10 , 'nivel_formacion_id' => 1 ],
+            ['titulo' => 'Delimitación, Consideraciones, alcance y rango de competencia' , 'horas' => 10 , 'nivel_formacion_id' => 1 ],
+            ['titulo' => 'Proceso para la delimitación de contextos territoriales' , 'horas' => 10 , 'nivel_formacion_id' => 1 ],
+            ['titulo' => 'Significado y alcance del proceso de demarcación de contextos territoriales' , 'horas' => 10 , 'nivel_formacion_id' => 1 ],
+        ];
+
+        Componente::insert($componentes);
 
 
         $evaluaciones = 

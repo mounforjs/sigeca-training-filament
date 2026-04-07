@@ -16,7 +16,7 @@ return new class extends Migration
     {
         Schema::create('capacitaciones_componentes', function (Blueprint $table) {
             $table->foreignIdFor(Capacitacion::class, "capacitacion_id");
-            $table->foreignIdFor(User::class, "user_id");
+            $table->foreignIdFor(User::class, "capacitador_id");
             $table->foreignIdFor(Componente::class, "componente_id");
             $table->unsignedInteger("horas");
             $table->boolean("investigacion");
