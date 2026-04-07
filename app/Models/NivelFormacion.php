@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class NivelFormacion extends Model
 {
@@ -23,6 +24,11 @@ class NivelFormacion extends Model
     public function evaluaciones() :BelongsToMany
     {
         return $this->belongsToMany(Evaluacion::class, "evaluacion_nivel_formacion");
+    }
+
+    public function capacitaciones(): HasMany
+    {
+        return $this->hasMany(Capacitacion::class);
     }
 
 

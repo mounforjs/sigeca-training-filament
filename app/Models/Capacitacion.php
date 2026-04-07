@@ -2,10 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Asistencia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Capacitacion extends Model
 {
@@ -32,7 +34,7 @@ class Capacitacion extends Model
 
     public function alumnos(): BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, "capacitaciones_users");
     }
 
     public function estado(): BelongsTo
@@ -53,5 +55,15 @@ class Capacitacion extends Model
     public function componentes(): BelongsToMany
     {
         return $this->belongsToMany(Componente::class, "capacitaciones_componentes");
+    }
+
+    public function proyecto(): BelongsTo
+    {
+        return $this->belongsTo(Proyecto::class);
+    }
+
+    public function nivelFormacion(): BelongsTo
+    {
+        return $this->belongsTo(NivelFormacion::class);
     }
 }

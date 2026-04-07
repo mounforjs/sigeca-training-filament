@@ -4,15 +4,17 @@ namespace App\Filament\Resources\Capacitacions\Schemas;
 
 use App\Enums\CapacitacionStatus;
 use App\Models\Municipio;
+use App\Models\NivelFormacion;
 use App\Models\Parroquia;
+use App\Models\Proyecto;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Components\Utilities\Get;
 use Filament\Schemas\Components\Utilities\Set;
 use Filament\Schemas\Schema;
-use Filament\Schemas\Components\Section;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 
@@ -22,21 +24,30 @@ class CapacitacionForm
     {
         return $schema
             ->schema([
-                Section::make("Registrar Capacitacion")
-                    ->description("Capacitación:")
+                Section::make("Registro")
+                    ->description("Capacitación")
                     ->schema([
                         TextInput::make('titulo')
                             ->required(),
                         Textarea::make('descripcion')
                             ->required()
                             ->columnSpanFull(),
+                        Select::make('proyecto_id')
+                            ->label("Proyecto")
+                            ->live()
+                            ->options(function() {
+                                return Proyecto::query()
+                                ->orderBy('id', 'asc')
+                                ->get()
+                                ->pluck('titulo', 'id');
+                            })->columnSpanFull(),
                         DatePicker::make('fecha_inicio')
                             ->default(now())
                             ->required()
                             ->live()
                             ->native(false),
                         DatePicker::make('fecha_final')
-                            ->default(now())
+                            ->default(now()->addDays(10))
                             ->required()
                             ->after('fecha_inicio')
                             ->minDate(fn ($get) => $get('fecha_inicio'))
@@ -96,6 +107,21 @@ class CapacitacionForm
                                     ->pluck('nombre_parroquia', 'parroquia_id')
                                     ->toArray();
                                 
+                            })
+                        ,
+                        Select::make('nivel_formacion_id')
+                            ->label("Nivel de Formacion")
+                            ->options(function(Get $get) {
+                                return NivelFormacion::query()
+                                ->orderBy('id', 'asc')
+                                ->where('proyecto_id', $get('proyecto_id'))
+                                ->get()
+                                ->mapWithkeys(function ($item) {
+                                    return [ $item->id => "$item->id | $item->descripcion" ];
+                                });
+                            })
+                            ->disableOptionWhen(function ($value) {
+                                return in_array($value, [1, 3]);
                             })
                     ])->columns(2)   
             ]);
